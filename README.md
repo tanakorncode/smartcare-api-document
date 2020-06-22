@@ -110,7 +110,7 @@
   **รายละเอียด:**
     | Filed Name  | Description |
     | ------------- | ------------- |
-    | doctor_name  | ชื่อแพทย์  |
+    | doctor_name  | ชื่อ-นามสกุล แพทย์  |
     | doctor_id  | ไอดีอ้างอิงแพทย์ (Queue)  |
     | doctor_eid  | ไอดีอ้างอิงแพทย์ (iMed)  |
     | prename  | คำนำหน้า  |

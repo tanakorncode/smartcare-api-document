@@ -2,6 +2,7 @@
 
 ## TABLE OF CONTENTS
 - [รายชื่อแพทย์ตามตารางเวลาออกตรวจ](#รายชื่อแพทย์ตามตารางเวลาออกตรวจ)
+- [การรับส่งข้อมูล ระหว่างระบบคิวกับระบบiMed](#การรับส่งข้อมูลระหว่างระบบคิวกับระบบiMed)
 
 ### รายชื่อแพทย์ตามตารางเวลาออกตรวจ
 
@@ -121,3 +122,171 @@
     | count_queue  | จำนวนคิวที่มีอยู่ในระบบ(เฉพาะของแพทย์)  |
     | booking_status  | สถานะการจองคิว `receive: ยังรับจอง`, `full: คิวเต็ม`  |
     | assign_available_qty  | จำนวนคงเหลือที่ระบุแพทย์ได้  |
+    
+### การรับส่งข้อมูลระหว่างระบบคิวกับระบบiMed
+* **URL**
+
+  `https://smartcare.egat.co.th/api/queue/v1/imed/send-data`
+
+* **Method:**
+ 
+  `POST`
+
+* **Headers:**
+
+   `accept: application/json`
+   `Content-Type: application/x-www-form-urlencoded`
+
+*  **URL Params**
+
+   None
+
+* **Data Params**
+
+  **Required:**
+   Event: "screen finish"  `พยาบาล ตรวจเสร็จ`
+   ```yaml
+   {
+     event_name: "screen finish",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string],
+     doctor_eid: [string]
+   }
+  ```
+
+   Event: "doctor finish" `แพทย์ ตรวจเสร็จ`
+   ```yaml
+   {
+     event_name: "doctor finish",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string],
+     pharm: [integer], // 0 or 1
+     lab: [integer], // 0 or 1
+     xray: [integer]  // 0 or 1
+   }
+   ```
+
+   Event: "paid finish" `จำหน่ายทางการเงิน`
+   ```yaml
+   {
+     event_name: "paid finish",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string]
+   }
+  ```
+
+  Event: "dispensing finish" `จ่ายยาแล้วเสร็จ`
+   ```yaml
+   {
+     event_name: "dispensing finish",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string]
+   }
+  ```
+
+* **Success Response:**
+
+   ```yaml
+   {
+     "success": true,
+     "message": "ok",
+     "data": ""
+   }
+   ```
+ 
+* **Error Response:**
+
+   * **Example:** <br />
+   ```yaml
+   {
+     "statusCode": 400,
+     "name": "Bad request",
+     "message": "invalid params"
+   }
+   ```
+
+* **For example call:**
+
+   commands:
+  ```
+  curl -X POST "https://smartcare.egat.co.th/api/queue/v1/imed/send-data" -H "accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "event_name='screen finish'&queue_id=123&caller_id=123&hn=1111&doctor_eid=1111"
+  ```
+
+   OR
+
+  axios Document [https://github.com/axios/axios](https://github.com/axios/axios)
+  ```js
+  const axios = require('axios');
+
+  axios.post('/queue/v1/imed/send-data', {
+    event_name: "screen finish",
+    queue_id: 1111,
+    caller_id: 2222,
+    hn: "123456"
+  },
+  {
+    baseURL: 'https://smartcare.egat.co.th/api'
+  }
+  )
+  .then(function (response) {
+     console.log(response);
+  })
+  .catch(function (error) {
+     console.log(error);
+  });
+  ```
+
+* **Notes:**
+
+  **ข้อมูลที่ส่งจาก "เรียกคิวซักประวัติ":**
+   Action:  `คลิกแล้วเปิด imed หน้าพยาบาล`
+   ```yaml
+   {
+     action: "screen nurse",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string],
+     doctor_eid: [string],
+     ipAddress: [string]
+   }
+  ```
+
+  **ข้อมูลที่ส่งจาก "เรียกคิวพบแพทย์":**
+   Action:  `คลิกแล้วเปิด imed หน้าแพทย์ตรวจรักษา`
+   ```yaml
+   {
+     action: "screen doctor",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string],
+     ipAddress: [string]
+   }
+  ```
+
+  **ข้อมูลที่ส่งจาก "เรียกคิวห้องยา":**
+   Action:  `คลิกแล้วเปิด imed หน้าจ่ายยา`
+   ```yaml
+   {
+     action: "screen dispensing",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string],
+     ipAddress: [string]
+   }
+  ```
+
+  **ข้อมูลที่ส่งจาก "เรียกคิวการเงิน":**
+   Action:  `คลิกแล้วเปิด imed หน้าการเงิน`
+   ```yaml
+   {
+     action: "screen paid",
+     queue_id: [integer],
+     caller_id: [integer],
+     hn: [string],
+     ipAddress: [string]
+   }
+  ```

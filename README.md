@@ -146,6 +146,7 @@
 * **Data Params**
 
   **Required:**
+  
    Event: "screen finish"  `พยาบาล ตรวจเสร็จ`
    ```yaml
    {

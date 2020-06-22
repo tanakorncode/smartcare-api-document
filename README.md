@@ -118,7 +118,7 @@
     | last_name  | นามสกุล  |
     | assign_qty  | จำนวนคิวที่ระบุแพทย์ได้  |
     | total_qty  | จำนวนคิวทั้งหมดที่รับ  |
-    | isFull  | สถานะคิวเต็ม (Boolean)  |
+    | isFull  | สถานะคิวเต็ม `(Boolean)`  |
     | count_queue  | จำนวนคิวที่มีอยู่ในระบบ(เฉพาะของแพทย์)  |
     | booking_status  | สถานะการจองคิว `receive: ยังรับจอง`, `full: คิวเต็ม`  |
     | assign_available_qty  | จำนวนคงเหลือที่ระบุแพทย์ได้  |

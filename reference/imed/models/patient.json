@@ -1,0 +1,69 @@
+{
+  "title": "Patient Full",
+  "allOf": [
+    {
+      "$ref": "./patient.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "patientId": {
+          "type": "string",
+          "description": "รหัสอ้างอิงผู้ป่วยในฐานข้อมูล"
+        },
+        "hn": {
+          "type": "string",
+          "description": "รหัสประจำตัวคนไข้ในรพ."
+        },
+        "prename": {
+          "type": "string",
+          "description": "คำนำหน้า"
+        },
+        "firstname": {
+          "type": "string",
+          "description": "ชื่อ"
+        },
+        "lastname": {
+          "type": "string",
+          "description": "นามสกุล"
+        },
+        "birthdate": {
+          "type": "string",
+          "description": "วันเกิด"
+        },
+        "fixGender": {
+          "type": "string",
+          "description": "เพศ"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "เบอร์โทร"
+        },
+        "email": {
+          "type": "string",
+          "description": "อีเมล"
+        },
+        "pid": {
+          "type": "string",
+          "description": "เลขบัตร ปชช"
+        },
+        "patientDebt": {
+          "type": "string",
+          "description": "สถานะค้างชำระ 0=ไม่ค้างชำระ, 1=ค้างชำระ"
+        },
+        "resultStatus": {
+          "type": "string",
+          "description": "สถานะการตรวจสอบ, SUCCESS, FAIL"
+        },
+        "resultText": {
+          "type": "string",
+          "description": "อธิบายการตรวจสอบ, FOUND, NOT FOUND"
+        }
+      }
+    }
+  ],
+  "x-tags": [
+    "Todos"
+  ],
+  "description": "ข้อมูลผู้ป่วย"
+}

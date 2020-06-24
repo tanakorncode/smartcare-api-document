@@ -1,0 +1,151 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API iMed",
+    "version": "1.0",
+    "description": "EGAT SMARTCARE API DOCUMENT"
+  },
+  "host": "smartcare.egat.local",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "iMed"
+    }
+  ],
+  "paths": {
+    "/portal-egat/api/register/checkPatient/{key}": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "key",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "GET Patient",
+        "tags": [
+          "iMed"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "./models/patient.json"
+            },
+            "examples": {
+              "example": {
+                "patientId": "316100619135071601",
+                "hn": "123456",
+                "prename": "นาย",
+                "firstname": "diclofenac",
+                "lastname": "",
+                "fixGender": "1",
+                "birthdate": "1990-10-05",
+                "pid": "",
+                "mobile": "",
+                "email": "",
+                "patientDebt": false,
+                "resultStatus": "SUCCESS",
+                "resultText": "FOUND"
+              }
+            }
+          }
+        },
+        "operationId": "get-portal-egat-api-register-checkPatient-hn",
+        "description": "ตรวจสอบว่าเป็นผู้ป่วยในระบบหรือไม่ , โดยใช้เลขบัตรประชาชน หรือ HN",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "path",
+            "name": "key",
+            "description": "รหัสประจำตัวผู้ป่วย หรือ hn",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/portal-egat/api/register/createVisit": {
+      "post": {
+        "summary": "Create Visit",
+        "operationId": "post-portal-egat-api-register-createVisit",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "visitId": {
+                  "type": "string",
+                  "description": "รหัสอ้างอิงการรักษาในฐานข้อมูล"
+                },
+                "vn": {
+                  "type": "string",
+                  "description": "เลขการเข้ารับบริการ."
+                }
+              }
+            },
+            "examples": {
+              "example": {
+                "visitId": "123456",
+                "vn": "123"
+              }
+            }
+          }
+        },
+        "description": "เปิด visit ผู้ป่วย",
+        "parameters": [
+          {
+            "name": "patientId",
+            "in": "formData",
+            "description": "รหัสอ้างอิงผู้ป่วยในฐานข้อมูล",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hn",
+            "in": "formData",
+            "description": "รหัสประจำตัวคนไข้ในรพ.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "formData",
+            "description": "รหัสเจ้าหน้าที่ที่เปิด visit.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "spid",
+            "in": "formData",
+            "description": "รหัสจุดบริการที่เปิด visit.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "formData",
+            "type": "string",
+            "name": "planId",
+            "description": "รหัสสิทธิการรักษา",
+            "required": true
+          }
+        ],
+        "tags": [
+          "iMed"
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "basePath": "/api/imed"
+}

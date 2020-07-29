@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "API iMed",
+    "title": "API Queue",
     "version": "1.0",
     "description": "EGAT SMARTCARE API DOCUMENT"
   },
@@ -362,10 +362,13 @@
               ]
             }
           }
+        ],
+        "tags": [
+          "Queue"
         ]
       }
     }
   },
   "definitions": {},
-  "basePath": "/api/imed"
+  "basePath": "/api/queue"
 }
